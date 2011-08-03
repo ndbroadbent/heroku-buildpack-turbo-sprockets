@@ -57,7 +57,7 @@ private
             log "assets_precompile", :status => "success"
             puts "Asset precompilation completed (#{"%.2f" % time}s)"
 
-            # If 'turbo-sprockets-rails3' gem is available, run 'assets:clean_expired' and
+            # If the 'turbo-sprockets-rails3' gem is available, run 'assets:clean_expired' and
             # cache assets if task was successful.
             if gem_is_bundled?('turbo-sprockets-rails3')
               log("assets_clean_expired") do
