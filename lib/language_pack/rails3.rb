@@ -82,6 +82,15 @@ private
           end
         end
       end
+      puts "Cleaning up cruft..."
+      run "bundle clean --force"
+      run "rm -rf tmp/cache/assets"
+      run "rm -rf vendor/cache/*"
+      run "rm -rf data/"
+      run "rm -rf notes/"
+      run "rm -rf spec/"
+      run "rm -rf features/"
+      run "rm -rf lib/test/"
     end
   end
 
