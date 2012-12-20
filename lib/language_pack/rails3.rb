@@ -82,6 +82,10 @@ private
           end
         end
       end
+      # TODO: Look for and if available run a task named "slug:cleanup", so
+      # TODO: this application-specific stuff isn't buried in here.
+      #
+      # TODO: Also, look at why .slugignore semantics are so broken.
       puts "Cleaning up cruft..."
       run "bundle clean --force"
       run "rm -rf tmp/cache/assets"
