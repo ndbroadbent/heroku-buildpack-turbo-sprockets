@@ -59,8 +59,10 @@ class LanguagePack::Ruby < LanguagePack::Base
       create_database_yml
       install_binaries
       run_assets_precompile_rake_task
-      set_version
     end
+
+    # Since this looks at Git, it needs to happen outside the allow_git stanza.
+    set_version
   end
 
 private
