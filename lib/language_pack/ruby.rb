@@ -59,10 +59,16 @@ class LanguagePack::Ruby < LanguagePack::Base
       create_database_yml
       install_binaries
       run_assets_precompile_rake_task
+      set_version
     end
   end
 
 private
+
+  def set_version
+    version = run("git log -1 --format='%H'")
+    set_env_default("VERSION", version)
+  end
 
   # the base PATH environment variable to be used
   # @return [String] the resulting PATH
