@@ -62,7 +62,7 @@ class LanguagePack::Ruby < LanguagePack::Base
     end
 
     # Since this looks at Git, it needs to happen outside the allow_git stanza.
-    set_version
+    #set_version
   end
 
 private
