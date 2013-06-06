@@ -67,6 +67,7 @@ private
 
   def set_version
     version = run("git log -1 --format='%H'")
+    puts("Setting version: #{version}")
     set_env_default("VERSION", version)
   end
 
