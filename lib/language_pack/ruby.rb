@@ -103,7 +103,7 @@ private
       matched_files.flatten!
       puts "Deleting #{matched_files.count} files matching .lateslugignore patterns."
       puts "MATCHED FILES:"
-      puts matched_files
+      puts matched_files.join("\n")
       matched_files.each { |f| FileUtils.rm_r(f) }
 
       # For what it's worth, I wrote an asset cleaning tool, but it's not generic enough for general use, but I bet
