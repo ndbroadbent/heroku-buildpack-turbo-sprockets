@@ -89,22 +89,19 @@ private
     # Meh, I should log something here.
     if File.exist?(".lateslugignore")
       topic("Beep Bloop. Processing your .lateslugignore file!.")
-      ignored_extensions = Array.new
+      ignored_files = Array.new
       late_slug_ignore_file = File.new(".lateslugignore", "r")
       late_slug_ignore_file.each do |line|
         unless line.chomp!.empty?
-          ignored_extensions.push line
+          ignored_files.push line
         end
       end
       late_slug_ignore_file.close
 
-      matched_files = Array.new
-      ignored_extensions.each {|ext| matched_files.push Dir.glob(File.join("**",ext))}
-      matched_files.flatten!
-      puts "Deleting #{matched_files.count} files matching .lateslugignore patterns."
-      puts "MATCHED FILES:"
-      puts matched_files.join("\n")
-      matched_files.each { |f| FileUtils.rm_r(f) }
+      puts "Deleting #{ignored_files.count} files matching .lateslugignore patterns."
+      puts "IGNORED FILES:"
+      puts ignored_files.join("\n")
+      ignored_files.each { |f| FileUtils.rm_r(f) }
 
       # For what it's worth, I wrote an asset cleaning tool, but it's not generic enough for general use, but I bet
       # it probably does a better job achieving a completely clean asset configuration when used in tandem with
