@@ -1,5 +1,47 @@
 ## Master
 
+* Set `--dev` by default for JRuby builds (but not at runtime). This optimizes the JVM for short process and is ideal for `bundle install` and asset precompiles. 
+
+## v134 (3/1/2015)
+
+* JVM is now available on cedar-14, do not vendor in JVM based on individual gems. If customer needs a specific version they should use multibuildpack with java and ruby buildpacks.
+* Set a default value of WEB_CONCURRENCY based on dyno size when `SENSIBLE_DEFAULTS` environment variable is present.
+* Run `bundle clean` in the same context as `bundle install` heroku/heroku-buildpack-ruby#347
+* Rails 4.2+ apps will have environment variable RAILS_SERVE_STATIC_FILES set to "enabled" by default #349
+* Rails 5 apps now work on Heroku #349
+
+## v133 (1/22/2015)
+
+* Bump bundler to 1.7.12 which includes multiple fixes and support for block source declaration (https://github.com/bundler/bundler/blob/1-7-stable/CHANGELOG.md).
+
+## v132 (1/21/2015)
+
+* Support multibuildpack export file (#319)
+* Auto set the JVM MAX HEAP based on dyno size for JRuby (#323)
+* Use s3 based npmjs servers for node (#336)
+* Support system.properties file for specifying JDK in JRuby (#305)
+* Fix ruby version parsing to support JRuby 9.0.0.0.pre1 (#339)
+
+## v131 (1/15/2015)
+
+* Revert v130 due to lack of propper messaging around WEB_CONCURRENCY settings.
+
+## v130 (1/15/2015)
+
+* Auto set WEB_CONCURRENCY based on dyno size if not already set.
+* Support multibuildpack export file (#319)
+* Auto set the JVM MAX HEAP based on dyno size for JRuby (#323)
+* Use s3 based npmjs servers for node (#336)
+* Support system.properties file for specifying JDK in JRuby (#305)
+
+## v129 (11/6/2014)
+
+* Fix asset caching bug (#300)
+
+## v128 (11/4/2014)
+
+* Better cedar14 Ruby install error message
+
 ## v127 (9/18/2014)
 
 * rbx is now stack aware
