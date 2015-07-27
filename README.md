@@ -108,7 +108,7 @@ To enable static assets being served on the dyno, [rails3_serve_static_assets](h
 For more information about using Ruby and buildpacks on Heroku, see these Dev Center articles:
 
 - [Heroku Ruby Support](https://devcenter.heroku.com/articles/ruby-support)
-- [Getting Started with Ruby on Heroku](https://devcenter.heroku.com/articles/nodejs)
+- [Getting Started with Ruby on Heroku](https://devcenter.heroku.com/articles/getting-started-with-ruby)
 - [Getting Started with Rails 4 on Heroku](https://devcenter.heroku.com/articles/getting-started-with-rails4)
 - [Buildpacks](https://devcenter.heroku.com/articles/buildpacks)
 - [Buildpack API](https://devcenter.heroku.com/articles/buildpack-api)
@@ -150,7 +150,7 @@ number of processes and running a different test file in each process,
 it does not parallelize tests within a test file. To run the tests: clone the repo, then `bundle install` then clone the test fixtures by running:
 
 ```sh
-$ hatchet install
+$ bundle exec hatchet install
 ```
 
 Now run the tests:
