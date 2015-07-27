@@ -91,6 +91,7 @@ class LanguagePack::Ruby < LanguagePack::Base
         install_bundler_in_app
         build_bundler
         post_bundler
+        bower_install
         create_database_yml
         install_binaries
         run_assets_precompile_rake_task
@@ -609,6 +610,25 @@ ERROR
       bundler.clean
     end
   end
+
+  def bower_install
+    instrument 'ruby.bower_install' do
+
+      bower = rake.task("bower:install:production")
+      return true unless bower.is_defined?
+
+      topic "Installing Bower components assets"
+      bower.invoke(env: rake_env)
+      if bower.success?
+        puts "Bower install completed (#{"%.2f" % bower.time}s)"
+      else
+        log "bower_install", :status => "failure"
+        msg = "Bower install failed.\n"
+        error msg
+      end
+    end
+  end
+
 
   # RUBYOPT line that requires syck_hack file
   # @return [String] require string if needed or else an empty string
