@@ -612,19 +612,21 @@ ERROR
   end
 
   def bower_install
-    instrument 'ruby.bower_install' do
+    if bundler.has_gem?('bower-rails')
+      instrument 'ruby.bower_install' do
 
-      bower = rake.task("bower:install:production")
-      return true unless bower.is_defined?
+        bower = rake.task("bower:install:production")
+        return true unless bower.is_defined?
 
-      topic "Installing Bower components assets"
-      bower.invoke(env: rake_env)
-      if bower.success?
-        puts "Bower install completed (#{"%.2f" % bower.time}s)"
-      else
-        log "bower_install", :status => "failure"
-        msg = "Bower install failed.\n"
-        error msg
+        topic "Installing Bower components assets"
+        bower.invoke(env: rake_env)
+        if bower.success?
+          puts "Bower install completed (#{"%.2f" % bower.time}s)"
+        else
+          log "bower_install", :status => "failure"
+          msg = "Bower install failed.\n"
+          error msg
+        end
       end
     end
   end
