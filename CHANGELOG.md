@@ -1,5 +1,29 @@
 ## Master
 
+## v142 (01/14/2016)
+
+* Added pgconfig jar to JDK for JRuby JDBC (#450)
+* Let API pick exact postgres plan (#449)
+* Follow redirects on `curl` command (#443)
+* Check for preinstalled JDK (#434)
+
+## v141 (11/03/2015)
+
+* Support for custom JDK versions in system.properties (#423)
+* Fix nodejs buildpack integration (#429)
+* Automatic jruby heap setting for IX dynos (#426)
+* Warn when RAILS_ENV != production (https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment)
+* Warn when using asset_sync (https://devcenter.heroku.com/articles/please-do-not-use-asset-sync)
+
+## v140 (9/9/2015)
+
+* JRuby specific ruby error message (#412)
+
+## v139 (8/31/2015)
+
+* Cached asset file should never take precedent over existing file (#402)
+* Do not write `database.yml` when using active record >= 4.1 (previously we only detected >= Rails 4.1) (#403)
+
 ## v138 (5/19/2015)
 
 * Bump bundler to 1.9.7 [Bundler changelog](https://github.com/bundler/bundler/blob/master/CHANGELOG.md#196-2015-05-02) (#378)

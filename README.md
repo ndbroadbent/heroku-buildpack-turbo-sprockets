@@ -1,6 +1,9 @@
 # Heroku Buildpack for Ruby
+![ruby](https://cloud.githubusercontent.com/assets/51578/8882726/52caf102-3217-11e5-8a6c-2d47c57f0030.jpg)
 
 This is a [Heroku Buildpack](http://devcenter.heroku.com/articles/buildpacks) for Ruby, Rack, and Rails apps. It uses [Bundler](http://gembundler.com) for dependency management.
+
+This buildpack requires 64-bit Linux.
 
 ## Usage
 
@@ -153,6 +156,9 @@ it does not parallelize tests within a test file. To run the tests: clone the re
 $ bundle exec hatchet install
 ```
 
+then go to [hatchet](https://github.com/heroku/hatchet) repo and follow the
+instructions to set it up.
+
 Now run the tests:
 
 ```sh
@@ -165,4 +171,4 @@ If you don't want to run them in parallel you can still:
 $ bundle exec rake spec
 ```
 
-Now go take a nap or something for a really long time.
+Now go take a nap or do something for a really long time.
