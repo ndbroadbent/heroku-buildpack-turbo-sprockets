@@ -1,5 +1,18 @@
 ## Master
 
+## v145 (03/08/2016)
+
+* Bump bundler to 1.11.2 [Bundler changelog](https://github.com/bundler/bundler/blob/master/CHANGELOG.md#1112-2015-12-15) (#461)
+* Rails 5 Support for logging to STDOUT via environment variable (#460)
+
+## v144 (02/01/2016)
+
+* Fix default ruby to actually be Ruby 2.2.4 (#456)
+
+## v143 (01/28/2016)
+
+* Change default for new apps to Ruby 2.2.4 (#454)
+
 ## v142 (01/14/2016)
 
 * Added pgconfig jar to JDK for JRuby JDBC (#450)

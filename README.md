@@ -1,5 +1,5 @@
 # Heroku Buildpack for Ruby
-![ruby](https://cloud.githubusercontent.com/assets/51578/8882726/52caf102-3217-11e5-8a6c-2d47c57f0030.jpg)
+![ruby](https://cloud.githubusercontent.com/assets/51578/13712725/3c6b3368-e793-11e5-83c1-728440111358.png)
 
 This is a [Heroku Buildpack](http://devcenter.heroku.com/articles/buildpacks) for Ruby, Rack, and Rails apps. It uses [Bundler](http://gembundler.com) for dependency management.
 
@@ -132,7 +132,7 @@ First you'll need to build a Heroku-compatible version of Node.js:
 
 Open `lib/language_pack/ruby.rb` in your editor, and change the following line:
 
-    BUNDLER_VERSION = "1.1.rc"
+    BUNDLER_VERSION = "1.11.2"
 
 Open `lib/language_pack/base.rb` in your editor, and change the following line:
 
