@@ -644,11 +644,14 @@ ERROR
     if bundler.has_gem?('bower-rails')
       instrument 'ruby.bower_install' do
 
-        bower = rake.task("bower:install:production")
-        return true unless bower.is_defined?
+        bower         = rake.task("bower:install:production")
+        bower_resolve = rake.task("bower:resolve")
+        return true unless bower.is_defined? && bower_resolve.is_defined?
 
         topic "Installing Bower components assets"
         bower.invoke(env: rake_env)
+        #Resolves css images to use sprockets fingerprint
+        bower_resolve.invoke(env: rake_env)
         if bower.success?
           puts "Bower install completed (#{"%.2f" % bower.time}s)"
         else
