@@ -103,6 +103,7 @@ WARNING
         create_database_yml
         install_binaries
         run_assets_precompile_rake_task
+        generate_praxis_docs
       end
       best_practice_warnings
       super
@@ -532,7 +533,7 @@ WARNING
     end
   end
 
-  def bundler_binstubs_path
+    def bundler_binstubs_path
     "vendor/bundle/bin"
   end
 
@@ -662,7 +663,6 @@ ERROR
       end
     end
   end
-
 
   # RUBYOPT line that requires syck_hack file
   # @return [String] require string if needed or else an empty string
@@ -946,6 +946,18 @@ WARNING
       @bundler_cache.clear(stack)
       # need to reinstall language pack gems
       install_bundler_in_app
+    end
+  end
+
+  def generate_praxis_docs
+    if bundler.has_gem?("praxis")
+      instrument "ruby.generate_praxis_docs" do
+        return false unless File.directory?("static")
+        log("generate_praxis_docs") do
+          topic("Generating Praxis API Documentation")
+          run("make docgen")
+        end
+      end
     end
   end
 end
