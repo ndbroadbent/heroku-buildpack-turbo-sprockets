@@ -15,10 +15,21 @@ class LanguagePack::Cache
     target.exist? && target.rmtree
   end
 
-  # write cache contents
+  # Overwrite cache contents
+  # When called the cache destination will be cleared and the new contents coppied over
+  # This method is perferable as LanguagePack::Cache#add can cause accidental cache bloat.
+  #
   # @param [String] path of contents to store. it will be stored using this a relative path from the cache_base.
   # @param [String] relative path to store the cache contents, if nil it will assume the from path
   def store(from, path = nil)
+    path ||= from
+    clear path
+    copy from, (@cache_base + path)
+  end
+
+  # Adds file to cache without clearing the destination
+  # Use LanguagePack::Cache#store to avoid accidental cache bloat
+  def add(from, path = nil)
     path ||= from
     copy from, (@cache_base + path)
   end
@@ -31,13 +42,18 @@ class LanguagePack::Cache
     copy (@cache_base + path), dest
   end
 
+  def load_without_overwrite(path, dest=nil)
+    dest ||= path
+    copy (@cache_base + path), dest, '-a -n'
+  end
+
   # copy cache contents
   # @param [String] source directory
   # @param [String] destination directory
-  def copy(from, to)
+  def copy(from, to, options='-a')
     return false unless File.exist?(from)
     FileUtils.mkdir_p File.dirname(to)
-    system("cp -a #{from}/. #{to}")
+    system("cp #{options} #{from}/. #{to}")
   end
 
   # copy contents between to places in the cache

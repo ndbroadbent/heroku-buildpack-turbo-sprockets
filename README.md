@@ -1,10 +1,11 @@
-Heroku buildpack: Ruby
-======================
+# Heroku Buildpack for Ruby
+![ruby](https://cloud.githubusercontent.com/assets/51578/13712725/3c6b3368-e793-11e5-83c1-728440111358.png)
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for Ruby, Rack, and Rails apps. It uses [Bundler](http://gembundler.com) for dependency management.
+This is a [Heroku Buildpack](http://devcenter.heroku.com/articles/buildpacks) for Ruby, Rack, and Rails apps. It uses [Bundler](http://gembundler.com) for dependency management.
 
-Usage
------
+This buildpack requires 64-bit Linux.
+
+## Usage
 
 ### Ruby
 
@@ -13,7 +14,7 @@ Example Usage:
     $ ls
     Gemfile Gemfile.lock
 
-    $ heroku create --stack cedar --buildpack https://github.com/heroku/heroku-buildpack-ruby.git
+    $ heroku create --buildpack https://github.com/heroku/heroku-buildpack-ruby.git
 
     $ git push heroku master
     ...
@@ -33,32 +34,6 @@ Example Usage:
 
 The buildpack will detect your app as Ruby if it has a `Gemfile` and `Gemfile.lock` files in the root directory. It will then proceed to run `bundle install` after setting up the appropriate environment for [ruby](http://ruby-lang.org) and [Bundler](http://gembundler.com).
 
-#### Run the Tests
-
-The tests on this buildpack are written in Rspec to allow the use of
-`focused: true`. Parallelization of testing is provided by
-https://github.com/grosser/parallel_tests this lib spins up an arbitrary
-number of processes and running a different test file in each process,
-it does not parallelize tests within a test file. To run the tests: clone the repo, then `bundle install` then clone the test fixtures by running:
-
-```sh
-$ hatchet install
-```
-
-Now run the tests:
-
-```sh
-$ bundle exec parallel_rspec -n 6 spec/
-```
-
-If you don't want to run them in parallel you can still:
-
-```sh
-$ bundle exec rake spec
-```
-
-Now go take a nap or something for a really long time.
-
 #### Bundler
 
 For non-windows `Gemfile.lock` files, the `--deployment` flag will be used. In the case of windows, the Gemfile.lock will be deleted and Bundler will do a full resolve so native gems are handled properly. The `vendor/bundle` directory is cached between builds to allow for faster `bundle install` times. `bundle clean` is used to ensure no stale gems are stored between builds.
@@ -73,7 +48,7 @@ Example Usage:
     $ ls config/environment.rb
     config/environment.rb
 
-    $ heroku create --stack cedar --buildpack https://github.com/heroku/heroku-buildpack-ruby.git
+    $ heroku create --buildpack https://github.com/heroku/heroku-buildpack-ruby.git
 
     $ git push heroku master
     ...
@@ -91,7 +66,7 @@ Example Usage:
 The buildpack will detect your app as a Rails 2 app if it has a `environment.rb` file in the `config`  directory.
 
 #### Rails Log STDOUT
-  A [rails_log_stdout](http://github.com/ddollar/rails_log_stdout) is installed by default so Rails' logger will log to STDOUT and picked up by Heroku's [logplex](http://github.com/heroku/logplex).
+A [rails_log_stdout](http://github.com/ddollar/rails_log_stdout) is installed by default so Rails' logger will log to STDOUT and picked up by Heroku's [logplex](http://github.com/heroku/logplex).
 
 #### Auto Injecting Plugins
 
@@ -107,7 +82,7 @@ Example Usage:
     $ ls config/application.rb
     config/application.rb
 
-    $ heroku create --stack cedar --buildpack https://github.com/heroku/heroku-buildpack-ruby.git
+    $ heroku create --buildpack https://github.com/heroku/heroku-buildpack-ruby.git
 
     $ git push heroku master
     -----> Heroku receiving push
@@ -131,8 +106,17 @@ The buildpack will detect your apps as a Rails 3 app if it has an `application.r
 
 To enable static assets being served on the dyno, [rails3_serve_static_assets](http://github.com/pedro/rails3_serve_static_assets) is installed by default. If the [execjs gem](http://github.com/sstephenson/execjs) is detected then [node.js](http://github.com/joyent/node) will be vendored. The `assets:precompile` rake task will get run if no `public/manifest.yml` is detected.  See [this article](http://devcenter.heroku.com/articles/rails31_heroku_cedar) on how rails 3.1 works on cedar.
 
-Hacking
--------
+## Documentation
+
+For more information about using Ruby and buildpacks on Heroku, see these Dev Center articles:
+
+- [Heroku Ruby Support](https://devcenter.heroku.com/articles/ruby-support)
+- [Getting Started with Ruby on Heroku](https://devcenter.heroku.com/articles/getting-started-with-ruby)
+- [Getting Started with Rails 4 on Heroku](https://devcenter.heroku.com/articles/getting-started-with-rails4)
+- [Buildpacks](https://devcenter.heroku.com/articles/buildpacks)
+- [Buildpack API](https://devcenter.heroku.com/articles/buildpack-api)
+
+## Hacking
 
 To use this buildpack, fork it on Github.  Push up changes to your fork, then create a test app with `--buildpack <your-github-url>` and push to it.
 
@@ -148,7 +132,7 @@ First you'll need to build a Heroku-compatible version of Node.js:
 
 Open `lib/language_pack/ruby.rb` in your editor, and change the following line:
 
-    BUNDLER_VERSION = "1.1.rc"
+    BUNDLER_VERSION = "1.11.2"
 
 Open `lib/language_pack/base.rb` in your editor, and change the following line:
 
@@ -160,33 +144,31 @@ Commit and push the changes to your buildpack to your Github fork, then push you
 
 NOTE: You'll need to vendor the plugins, node, Bundler, and libyaml by running the rake tasks for the buildpack to work properly.
 
-Flow
-----
+### Testing
 
-Here's the basic flow of how the buildpack works:
+The tests on this buildpack are written in Rspec to allow the use of
+`focused: true`. Parallelization of testing is provided by
+https://github.com/grosser/parallel_tests this lib spins up an arbitrary
+number of processes and running a different test file in each process,
+it does not parallelize tests within a test file. To run the tests: clone the repo, then `bundle install` then clone the test fixtures by running:
 
-Ruby (Gemfile and Gemfile.lock is detected)
+```sh
+$ bundle exec hatchet install
+```
 
-* runs Bundler
-* installs binaries
-  * installs node if the gem execjs is detected
-* runs `rake assets:precompile` if the rake task is detected
+then go to [hatchet](https://github.com/heroku/hatchet) repo and follow the
+instructions to set it up.
 
-Rack (config.ru is detected)
+Now run the tests:
 
-* everything from Ruby
-* sets RACK_ENV=production
+```sh
+$ bundle exec parallel_rspec -n 6 spec/
+```
 
-Rails 2 (config/environment.rb is detected)
+If you don't want to run them in parallel you can still:
 
-* everything from Rack
-* sets RAILS_ENV=production
-* install rails 2 plugins
-  * [rails_log_stdout](http://github.com/ddollar/rails_log_stdout)
+```sh
+$ bundle exec rake spec
+```
 
-Rails 3 (config/application.rb is detected)
-
-* everything from Rails 2
-* install rails 3 plugins
-  * [rails3_server_static_assets](https://github.com/pedro/rails3_serve_static_assets)
-
+Now go take a nap or do something for a really long time.

@@ -2,16 +2,17 @@ require "language_pack/shell_helpers"
 
 module LanguagePack
   class RubyVersion
-    class BadVersionError < StandardError
+    class BadVersionError < BuildpackError
       def initialize(output = "")
-        msg = "Can not parse Ruby Version:\n"
-        msg << "Valid versions listed on: https://devcenter.heroku.com/articles/ruby-support\n"
+        msg = ""
         msg << output
+        msg << "Can not parse Ruby Version:\n"
+        msg << "Valid versions listed on: https://devcenter.heroku.com/articles/ruby-support\n"
         super msg
       end
     end
 
-    DEFAULT_VERSION_NUMBER = "2.0.0"
+    DEFAULT_VERSION_NUMBER = "2.2.4"
     DEFAULT_VERSION        = "ruby-#{DEFAULT_VERSION_NUMBER}"
     LEGACY_VERSION_NUMBER  = "1.9.2"
     LEGACY_VERSION         = "ruby-#{LEGACY_VERSION_NUMBER}"
